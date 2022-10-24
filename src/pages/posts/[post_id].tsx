@@ -1,4 +1,5 @@
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetStaticPaths } from "next";
+import { withStaticConfig } from "../../utils/getStaticProps";
 import { getAllPostIds, getPostData } from "../api/posts";
 
 interface Props {
@@ -31,15 +32,25 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const id = context?.params?.post_id! as string;
-  const postData = await getPostData(id);
+// export const getStaticProps: GetStaticProps = async (context) => {
+//   const id = context?.params?.post_id! as string;
+//   const postData = await getPostData(id);
 
-  return {
-    props: {
-      postData,
-    },
-  };
-};
+//   return {
+//     props: {
+//       postData,
+//     },
+//   };
+// };
+
+export const getStaticProps = withStaticConfig(
+  async (context: { params: { post_id: string } }) => {
+    const id = context?.params?.post_id! as string;
+    const postData = await getPostData(id);
+    return {
+      props: { postData },
+    };
+  }
+);
 
 export default Post;

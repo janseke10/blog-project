@@ -1,45 +1,38 @@
-import { GetStaticPaths, GetStaticProps } from "next";
-import { getAllPostIds, getPostData } from "../api/posts";
+import React from "react";
+import { withStaticConfig } from "../../utils/getStaticProps";
+import { getAllPostData } from "../api/posts";
 
 interface Props {
-  postData: {
-    post_id: number;
-    title: string;
-    content: string;
-    created_at: Date;
-    updated_at: Date;
-    published_at: Date;
-    author_id: number;
-  };
+  postData: [
+    {
+      post_id: number;
+      title: string;
+      content: string;
+      created_at: Date;
+      updated_at: Date;
+      published_at: Date;
+      author_id: number;
+    }
+  ];
 }
 
 const Posts: React.FC<Props> = (props) => {
+  const titles = props.postData.map((obj) => obj.title);
   return (
     <div>
-      {props.postData.title}
-      <br />
-      {props.postData.content}
+      {React.Children.map(titles, (title) => {
+        return <span>{title}</span>;
+      })}
     </div>
   );
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = await getAllPostIds();
+export const getStaticProps = withStaticConfig(async () => {
+  const postData = await getAllPostData();
+  console.log("postDATA: ", postData);
   return {
-    paths,
-    fallback: false,
+    props: { postData },
   };
-};
-
-export const getStaticProps: GetStaticProps = async (context) => {
-  const id = context?.params?.post_id! as string;
-  const postData = await getPostData(id);
-
-  return {
-    props: {
-      postData,
-    },
-  };
-};
+});
 
 export default Posts;

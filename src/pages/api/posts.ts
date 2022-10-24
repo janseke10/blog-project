@@ -27,6 +27,14 @@ export async function getPostData(post_id: string) {
   const db = await openDB();
   const id: number = +post_id;
   const post = await db.get("SELECT * FROM Post where post_id = ?", [id]);
-
   return post;
+}
+
+/** TODO: add category of posts */
+export async function getAllPostData() {
+  const db = await openDB();
+  const posts = db.all(
+    "SELECT author_id, title, content, created_at, updated_at, published_at FROM post"
+  );
+  return posts;
 }

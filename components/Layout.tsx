@@ -6,7 +6,7 @@ export default function Layout({ children }: { children: ReactElement }) {
   console.log(children.props.categories);
   return (
     <>
-      <Header></Header>
+      <Header />
       <Navbar categories={children.props.categories} />
       <main>{children}</main>
     </>
