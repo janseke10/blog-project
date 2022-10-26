@@ -3,10 +3,6 @@ import type { AppProps } from "next/app";
 import { BreakpointProvider } from "react-socks";
 import Layout from "../../components/Layout";
 
-// function MyApp({ Component, pageProps }: AppProps) {
-//   return <Component {...pageProps} />;
-// }
-
 function MyApp({ Component, pageProps }: AppProps) {
   console.log(pageProps);
   return (

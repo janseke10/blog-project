@@ -22,13 +22,9 @@ if (typeof window !== "undefined") {
 
 export default function Navbar({ categories }: NavigationProps) {
   const router = useRouter();
-  const currentRoute = router.pathname;
+  const currentRoute = router.asPath;
 
-  console.log("categories: ", categories);
-  // const names = categories.map((obj) => obj.category_name);
-  categories.forEach((category) => {
-    console.log(category.category_name);
-  });
+  console.log("current route: ", currentRoute);
 
   return (
     <nav>
@@ -53,14 +49,14 @@ export default function Navbar({ categories }: NavigationProps) {
         </div>
 
         <ul className="text-lg hidden md:flex bg-white " id="menu">
-          <li className="text-gray-700 font-bold py-3">
+          <li>
             <Link href="/">
               <a className={currentRoute === "/" ? "active" : "non-active"}>
                 <span>Home</span>
               </a>
             </Link>
           </li>
-          <li className="py-3">
+          <li>
             <Link href="/about">
               <a
                 className={currentRoute === "/about" ? "active" : "non-active"}
@@ -69,7 +65,7 @@ export default function Navbar({ categories }: NavigationProps) {
               </a>
             </Link>
           </li>
-          <li className="py-3">
+          <li>
             <Link href="/contact">
               <a
                 className={
@@ -80,13 +76,17 @@ export default function Navbar({ categories }: NavigationProps) {
               </a>
             </Link>
           </li>
-          {categories.map((category) => {
+          {categories?.map((category) => {
+            console.log(category);
             return (
-              <li className="py-3">
+              <li>
                 <Link href={`/categories/${category.slug}`}>
                   <a
-                    href="#"
-                    className="px-4 flex justify-end border-r-4 border-white"
+                    className={
+                      currentRoute === `/categories/${category.slug}`
+                        ? "active"
+                        : "non-active"
+                    }
                   >
                     <span>{category.category_name}</span>
                   </a>

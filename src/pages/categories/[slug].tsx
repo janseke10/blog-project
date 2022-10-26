@@ -26,7 +26,7 @@ const Post: React.FC<Props> = (props) => {
       {props.postData.map((post) => {
         return (
           <Card
-            img={"img/sunflowers.JPG"}
+            img={"../img/sunflowers.JPG"}
             title={post.title}
             author={post.first_name}
           />

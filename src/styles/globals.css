@@ -45,10 +45,10 @@ a {
 }
 
 .active {
-  @apply px-4 flex justify-end border-b-4 border-primary-100
+  @apply px-4 flex justify-end border-b-4 border-primary-100 text-gray-700 font-bold py-3
 }
 
 .non-active {
-  @apply px-4 flex justify-end border-r-4 border-white
+  @apply px-4 flex justify-end border-r-4 border-white py-3
 }
 

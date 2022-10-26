@@ -15,18 +15,19 @@ export default async function getAllPosts(
   });
 }
 
-export async function getAllPostIds() {
+export async function getAllPostSlugs() {
   const db = await openDB();
-  const posts = await db.all("SELECT post_id FROM post");
+  const posts = await db.all("SELECT post_slug FROM post");
   return posts.map((post) => ({
-    params: { post_id: post.post_id.toString() },
+    params: { post_slug: post.post_slug },
   }));
 }
 
-export async function getPostData(post_id: string) {
+export async function getPostData(post_slug: string) {
   const db = await openDB();
-  const id: number = +post_id;
-  const post = await db.get("SELECT * FROM Post where post_id = ?", [id]);
+  const post = await db.get("SELECT * FROM Post where post_slug = ?", [
+    post_slug,
+  ]);
   return post;
 }
 

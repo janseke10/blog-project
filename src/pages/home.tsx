@@ -128,3 +128,13 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+// export async function getServerSideProps(context) {
+//   const res = await fetch(`http://localhost/vagawong/wp-json/wp/v2/posts`);
+//   const data = await res.json();
+//   return {
+//     props: {
+//       data
+//     },
+//   }
+// }

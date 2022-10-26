@@ -16,7 +16,7 @@ CREATE TABLE post (
 	updated_at DATETIME,
 	published_at DATETIME,
 	author_id INTEGER REFERENCES author(author_id),
-	slug TEXT
+	post_slug TEXT
 );
 
 CREATE TABLE category (
@@ -54,8 +54,8 @@ CREATE TABLE comment (
 
 INSERT INTO author (first_name, last_name, email) values ('Rob', 'Wong', 'rob@gmail.com');
 -- INSERT INTO Person (firstName, middleName, lastName, email) values ('Janneke', 'van', 'Hulten', 'janneke@gmail.com');
-INSERT INTO post (title, content, created_at, updated_at, published_at, author_id) values ('lorem ipsum1', 'lorem upsum blablabla', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '1');
-INSERT INTO post (title, content, created_at, updated_at, published_at, author_id) values ('lorem ipsum2', 'lorem upsum blablabla', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '1');
+INSERT INTO post (title, content, created_at, updated_at, published_at, author_id, post_slug) values ('lorem ipsum1', 'lorem upsum blablabla', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '1', 'lorips1');
+INSERT INTO post (title, content, created_at, updated_at, published_at, author_id, post_slug) values ('lorem ipsum2', 'lorem upsum blablabla', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '1', 'lorips2');
 INSERT INTO category (category_name, is_in_header, slug) values ('ONEBAG', '1', 'onebag');
 INSERT INTO category (category_name, is_in_header, slug) values ('TEST', '1', 'test');
 INSERT INTO post_category(post_id, category_id) values ('1', '1');
