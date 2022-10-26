@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import React from "react";
 
 export interface NavigationProps {
-  categories: [{ category_name: string; slug: string }];
+  categories: [{ name: string; slug: string; uri: string }];
 }
 
 if (typeof window !== "undefined") {
@@ -88,7 +88,7 @@ export default function Navbar({ categories }: NavigationProps) {
                         : "non-active"
                     }
                   >
-                    <span>{category.category_name}</span>
+                    <span>{category.name}</span>
                   </a>
                 </Link>
               </li>
