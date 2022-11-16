@@ -17,17 +17,15 @@ export default async function getAllPosts(
 
 export async function getAllPostSlugs() {
   const db = await openDB();
-  const posts = await db.all("SELECT post_slug FROM post");
+  const posts = await db.all("SELECT slug FROM post");
   return posts.map((post) => ({
-    params: { post_slug: post.post_slug },
+    params: { slug: post.slug },
   }));
 }
 
-export async function getPostData(post_slug: string) {
+export async function getPostData(slug: string) {
   const db = await openDB();
-  const post = await db.get("SELECT * FROM Post where post_slug = ?", [
-    post_slug,
-  ]);
+  const post = await db.get("SELECT * FROM Post where slug = ?", [slug]);
   return post;
 }
 

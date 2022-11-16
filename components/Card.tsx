@@ -2,21 +2,24 @@ interface Props {
   img: string;
   title: string;
   author: string;
+  slug: string;
 }
 
-const Card: React.FC<Props> = ({ img, title, author }) => {
+const Card: React.FC<Props> = ({ img, title, author, slug }) => {
   return (
     <div className="card">
-      <img src={img} className="w-full h-32 sm:h-48 object-cover" />
-      <div className="m-4">
-        <span className="font-bold">{title}</span>
-        <span className="block text-gray-500 text-sm">By {author}</span>
-      </div>
-      <div className="badge">
-        <svg
+      <a href={`/posts/${slug}`}>
+        <img src={img} className="w-full h-32 sm:h-48 object-cover" />
+        <div className="m-4">
+          <span className="font-bold">{title}</span>
+          <span className="block text-gray-500 text-sm">By {author}</span>
+        </div>
+      </a>
+      {/* <div className="badge">
+        <svgßß
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
-          viewBox="0 0 24 24"
+          viewBox="0 0 24 24"ß
           stroke-width="1.5"
           stroke="currentColor"
           className="w-5 inline-block"
@@ -29,7 +32,7 @@ const Card: React.FC<Props> = ({ img, title, author }) => {
         </svg>
 
         <span>Israël</span>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -1,10 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-
-export interface NavigationProps {
-  categories: [{ name: string; slug: string; uri: string }];
-}
+import { NavigationProps } from "../src/types";
 
 if (typeof window !== "undefined") {
   const burger = document.querySelector("#burger");
@@ -27,8 +24,8 @@ export default function Navbar({ categories }: NavigationProps) {
   console.log("current route: ", currentRoute);
 
   return (
-    <nav>
-      <div className="sticky top-0 z-50">
+    <nav className="sticky top-0 z-50 ">
+      <div className="bg-secondary-100 bg-opacity-50">
         <div className="flex justify-between items-center">
           <div className="px-4 cursor-pointer md:hidden" id="burger">
             <svg
@@ -48,7 +45,7 @@ export default function Navbar({ categories }: NavigationProps) {
           </div>
         </div>
 
-        <ul className="text-lg hidden md:flex bg-white " id="menu">
+        <ul className="text-lg hidden md:flex " id="menu">
           <li>
             <Link href="/">
               <a className={currentRoute === "/" ? "active" : "non-active"}>
@@ -76,26 +73,92 @@ export default function Navbar({ categories }: NavigationProps) {
               </a>
             </Link>
           </li>
+
           {categories?.map((category) => {
-            console.log(category);
-            return (
-              <li>
-                <Link href={`/categories/${category.slug}`}>
-                  <a
-                    className={
-                      currentRoute === `/categories/${category.slug}`
-                        ? "active"
-                        : "non-active"
-                    }
-                  >
-                    <span>{category.name}</span>
-                  </a>
-                </Link>
-              </li>
-            );
+            console.log("yes hellooo node", category);
+            if (
+              category.node.ancestors === null &&
+              !category.node.children.nodes.length
+            ) {
+              console.log("no ancestors and no children");
+              return (
+                <li>
+                  <Link href={`/categories/${category.node.slug}`}>
+                    <a
+                      className={
+                        currentRoute === `/categories/${category.node.slug}`
+                          ? "active"
+                          : "non-active"
+                      }
+                    >
+                      <span>{category.node.name}</span>
+                    </a>
+                  </Link>
+                </li>
+              );
+            }
+            if (
+              category.node.ancestors === null &&
+              category.node.children.nodes.length
+            ) {
+              console.log("no ancestors yes children");
+              console.log(category.node.name);
+              return (
+                <div className="flex justify-center">
+                  <div className="dropdown relative">
+                    <button
+                      id="dropdownNavbarLink"
+                      data-dropdown-toggle="dropdownNavbar"
+                      className="non-active dropdown-toggle flex items-center"
+                    >
+                      <span>{category.node.name}</span>
+                      <svg
+                        className="ml-1 w-5 h-5"
+                        aria-hidden="true"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                    </button>
+                    <div
+                      id="dropdownNavbar"
+                      className="hidden z-10 w-44 font-normal  rounded divide-y divide-gray-100 shadow"
+                    >
+                      <ul
+                        className="py-1 text-sm text-gray-700 dropdown-menu"
+                        aria-labelledby="dropdownLargeButton"
+                      >
+                        {category.node.children.nodes.map((child, index) => {
+                          console.log("child: ", child);
+                          return (
+                            <div>
+                              <h1>{child.slug}</h1>
+                              <li key={index}>
+                                <Link href={`/categories/${child.slug}`}>
+                                  <a className="dropdown-item block py-2 px-4 hover:bg-gray-10">
+                                    {child.name}
+                                  </a>
+                                </Link>
+                              </li>
+                            </div>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              );
+            }
           })}
         </ul>
       </div>
+      <script src="https://unpkg.com/flowbite@1.5.1/dist/flowbite.js"></script>
     </nav>
   );
 }

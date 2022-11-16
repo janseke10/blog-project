@@ -1,17 +1,28 @@
 import { gql } from "@apollo/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { client } from "../../lib/apollo";
-import { openDB } from "../openDB";
 
 export async function getStaticProps() {
   const GET_HEADER_CATEGORIES = gql`
-    query getHeaderCategories {
-      categories(where: { parent: null }) {
-        nodes {
-          name
-          slug
-          uri
-          parentId
+    query getAllCategories {
+      categories {
+        edges {
+          node {
+            name
+            slug
+            children {
+              nodes {
+                slug
+                name
+              }
+            }
+            ancestors {
+              nodes {
+                slug
+                name
+              }
+            }
+          }
         }
       }
     }
@@ -19,11 +30,7 @@ export async function getStaticProps() {
   const response = await client.query({
     query: GET_HEADER_CATEGORIES,
   });
-  const categories = response?.data?.categories.nodes;
-  categories.map((category: { parentId: null }) => {
-    if (category.parentId === null) {
-    }
-  });
+  const categories = response?.data?.categories.edges;
   return {
     props: {
       categories,
