@@ -82,19 +82,17 @@ export default function Navbar({ categories }: NavigationProps) {
             ) {
               console.log("no ancestors and no children");
               return (
-                <li>
-                  <Link href={`/categories/${category.node.slug}`}>
-                    <a
-                      className={
-                        currentRoute === `/categories/${category.node.slug}`
-                          ? "active"
-                          : "non-active"
-                      }
-                    >
-                      <span>{category.node.name}</span>
-                    </a>
-                  </Link>
-                </li>
+                <Link href={`/categories/${category.node.slug}`}>
+                  <a
+                    className={
+                      currentRoute === `/categories/${category.node.slug}`
+                        ? "active"
+                        : "non-active"
+                    }
+                  >
+                    <span>{category.node.name}</span>
+                  </a>
+                </Link>
               );
             }
             if (
@@ -108,7 +106,7 @@ export default function Navbar({ categories }: NavigationProps) {
                   <div className="dropdown relative">
                     <button
                       id="dropdownNavbarLink"
-                      data-dropdown-toggle="dropdownNavbar"
+                      data-dropdown-toggle={category.node.slug}
                       className="non-active dropdown-toggle flex items-center"
                     >
                       <span>{category.node.name}</span>
@@ -127,7 +125,7 @@ export default function Navbar({ categories }: NavigationProps) {
                       </svg>
                     </button>
                     <div
-                      id="dropdownNavbar"
+                      id={category.node.slug}
                       className="hidden z-10 w-44 font-normal  rounded divide-y divide-gray-100 shadow"
                     >
                       <ul
@@ -138,7 +136,6 @@ export default function Navbar({ categories }: NavigationProps) {
                           console.log("child: ", child);
                           return (
                             <div>
-                              <h1>{child.slug}</h1>
                               <li key={index}>
                                 <Link href={`/categories/${child.slug}`}>
                                   <a className="dropdown-item block py-2 px-4 hover:bg-gray-10">
